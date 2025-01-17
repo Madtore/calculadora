@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binari Calculadora</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <style></style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-success w-100 text-center" role="alert">
+            <h1>CALCULADORA</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-info text-center" role="alert">NUMERO</div>
+          <div class="input-group">
+            <input type="text" class="form-control" required id="inputNum" />
+            <span class="input-group-text">
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                id="selectbase"
+              >
+                <option value="1">DECIMAL</option>
+                <option value="2">BINARY</option>
+                <option value="3">HEXADECIMAL</option>
+                <option value="4">OCTAL</option>
+              </select></span
+            >
+            <span class="input-group-text"
+              ><button
+                type="button"
+                class="btn btn-secondary"
+                onclick="validation()"
+              >
+                Convertir
+              </button></span
+            >
+          </div>
+        </div>
+        <div class="col">
+          <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+              <tr class="table-primary">
+                <th scope="row">DECIMAL</th>
+                <td><span id="resDecimal"></span></td>
+                
+              </tr>
+              <tr class="table-secondary">
+                <th scope="row">BINARY</th>
+                <td><span id="resBinario"></span></td>
+               
+              </tr>
+              <tr class="table-info">
+                <th scope="row">HEXADECIMAL</th>
+                <td><span id="resEsadecimal"></span></td>
+              </tr>
+              <tr class="table-warning">
+                <th scope="row">OCTAL</th>
+                <td><span id="resOctal"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    <script>
+      function pattern() {
+
+        document.getElementById('resDecimal').style.display = 'inline';         
+        document.getElementById('resBinario').style.display = 'inline';
+        document.getElementById('resEsadecimal').style.display = 'inline'; 
+        document.getElementById('resOctal').style.display = 'inline'; 
+
+        let opz = parseInt(document.getElementById("selectbase").value);
+
+        switch (opz) {
+          case 1:
+            document.getElementById('resDecimal').style.display = 'none'; 
+            return new RegExp('[0-9]+');
+          case 2:      
+          document.getElementById('resBinario').style.display = 'none'; 
+            return new RegExp('[0-1]+');
+          case 3:        
+          document.getElementById('resEsadecimal').style.display = 'none'; 
+            return new RegExp('[0-9a-fA-F]+');
+          case 4:         
+          document.getElementById('resOctal').style.display = 'none'; 
+            return new RegExp('[0-7]+');
+          default:
+            break;
+        }
+      }
+
+      function validation() {
+        let opz = parseInt(document.getElementById("selectbase").value);
+        let value = document.getElementById("inputNum").value;
+        if (pattern().test(value)) {
+          res(toInt(value, opz));
+        } else {
+          alert("cazzo fai");
+        }
+      }
+
+      function toInt(value, opz){
+        switch (opz) {
+          case 1: 
+            return parseInt(value,10);
+          case 2:      
+            return parseInt(value,2);
+          case 3:        
+            return parseInt(value,16);
+          case 4:         
+            return parseInt(value,8);
+          default:
+            break;
+        }
+      }
+
+      function res(value){
+        document.getElementById('resBinario').innerHTML = parseInt(value).toString(2);
+        document.getElementById('resEsadecimal').innerHTML = parseInt(value).toString(16).toUpperCase();
+        document.getElementById('resOctal').innerHTML = parseInt(value).toString(8);
+        document.getElementById('resDecimal').innerHTML = (value);
+      }
+
+    </script>
+  </body>
+</html>
